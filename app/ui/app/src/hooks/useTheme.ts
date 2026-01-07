@@ -3,6 +3,25 @@ import { useSettings } from "./useSettings";
 
 export type Theme = "light" | "dark" | "system";
 
+// Helper function to apply theme to document
+function applyTheme(theme: Theme, prefersDark?: boolean) {
+  const root = document.documentElement;
+  
+  // Remove existing theme classes
+  root.classList.remove("light", "dark");
+  
+  if (theme === "system") {
+    // Use system preference
+    const isDark = prefersDark ?? window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (isDark) {
+      root.classList.add("dark");
+    }
+  } else {
+    // Apply explicit theme
+    root.classList.add(theme);
+  }
+}
+
 export function useTheme() {
   const { settingsData, setSettings } = useSettings();
   
@@ -10,21 +29,7 @@ export function useTheme() {
 
   // Apply theme to document
   useEffect(() => {
-    const root = document.documentElement;
-    
-    // Remove existing theme classes
-    root.classList.remove("light", "dark");
-    
-    if (theme === "system") {
-      // Use system preference
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      if (prefersDark) {
-        root.classList.add("dark");
-      }
-    } else {
-      // Apply explicit theme
-      root.classList.add(theme);
-    }
+    applyTheme(theme);
   }, [theme]);
 
   // Listen for system theme changes when in system mode
@@ -33,11 +38,7 @@ export function useTheme() {
 
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handleChange = (e: MediaQueryListEvent) => {
-      const root = document.documentElement;
-      root.classList.remove("light", "dark");
-      if (e.matches) {
-        root.classList.add("dark");
-      }
+      applyTheme(theme, e.matches);
     };
 
     mediaQuery.addEventListener("change", handleChange);
