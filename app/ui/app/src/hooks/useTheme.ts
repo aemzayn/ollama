@@ -3,6 +3,9 @@ import { useSettings } from "./useSettings";
 
 export type Theme = "light" | "dark" | "system";
 
+// Default theme constant - should match backend DefaultTheme
+export const DEFAULT_THEME: Theme = "system";
+
 // Helper function to check system preference
 function getSystemPreference(): boolean {
   return window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -18,9 +21,7 @@ function applyTheme(theme: Theme, prefersDark?: boolean) {
   if (theme === "system") {
     // Use system preference
     const isDark = prefersDark ?? getSystemPreference();
-    if (isDark) {
-      root.classList.add("dark");
-    }
+    root.classList.add(isDark ? "dark" : "light");
   } else {
     // Apply explicit theme
     root.classList.add(theme);
@@ -30,7 +31,7 @@ function applyTheme(theme: Theme, prefersDark?: boolean) {
 export function useTheme() {
   const { settingsData, setSettings } = useSettings();
   
-  const theme = (settingsData?.Theme || "system") as Theme;
+  const theme = (settingsData?.Theme || DEFAULT_THEME) as Theme;
 
   // Apply theme to document
   useEffect(() => {

@@ -23,7 +23,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useUser } from "@/hooks/useUser";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getSettings, updateSettings } from "@/api";
-import { useTheme } from "@/hooks/useTheme";
+import { useTheme, DEFAULT_THEME } from "@/hooks/useTheme";
 
 function AnimatedDots() {
   return (
@@ -164,7 +164,7 @@ export default function Settings() {
         Tools: false,
         ContextLength: 4096,
         AirplaneMode: false,
-        Theme: "system",
+        Theme: DEFAULT_THEME,
       });
       updateSettingsMutation.mutate(defaultSettings);
     }
