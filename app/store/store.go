@@ -169,6 +169,9 @@ type Settings struct {
 
 	// SidebarOpen indicates if the chat sidebar is open
 	SidebarOpen bool
+
+	// Theme specifies the UI theme preference (light, dark, or system)
+	Theme string
 }
 
 type Store struct {

@@ -14,12 +14,16 @@ import {
   XMarkIcon,
   CogIcon,
   ArrowLeftIcon,
+  SunIcon,
+  MoonIcon,
+  ComputerDesktopIcon,
 } from "@heroicons/react/20/solid";
 import { Settings as SettingsType } from "@/gotypes";
 import { useNavigate } from "@tanstack/react-router";
 import { useUser } from "@/hooks/useUser";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getSettings, updateSettings } from "@/api";
+import { useTheme, Theme } from "@/hooks/useTheme";
 
 function AnimatedDots() {
   return (
@@ -53,6 +57,7 @@ export default function Settings() {
   const [connectionError, setConnectionError] = useState<string | null>(null);
   const [pollingInterval, setPollingInterval] = useState<number | null>(null);
   const navigate = useNavigate();
+  const { theme, setTheme } = useTheme();
 
   const {
     data: settingsData,
@@ -150,6 +155,7 @@ export default function Settings() {
         Tools: false,
         ContextLength: 4096,
         AirplaneMode: false,
+        Theme: "system",
       });
       updateSettingsMutation.mutate(defaultSettings);
     }
@@ -341,6 +347,66 @@ export default function Settings() {
               )}
             </div>
           </div>
+          
+          {/* Appearance */}
+          <div className="overflow-hidden rounded-xl bg-white dark:bg-neutral-800">
+            <div className="p-4">
+              <Field>
+                <div className="flex items-start space-x-3">
+                  <SunIcon className="mt-1 h-5 w-5 flex-shrink-0 text-black dark:text-neutral-100" />
+                  <div className="w-full">
+                    <Label>Appearance</Label>
+                    <Description>Choose how Ollama looks to you.</Description>
+                    <div className="mt-3 grid grid-cols-3 gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setTheme("light")}
+                        className={`flex flex-col items-center gap-2 px-4 py-3 rounded-lg border-2 transition-colors ${
+                          theme === "light"
+                            ? "border-black dark:border-white bg-neutral-100 dark:bg-neutral-700"
+                            : "border-neutral-200 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700/50"
+                        }`}
+                      >
+                        <SunIcon className="h-5 w-5 text-black dark:text-white" />
+                        <span className="text-sm font-medium text-black dark:text-white">
+                          Light
+                        </span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setTheme("dark")}
+                        className={`flex flex-col items-center gap-2 px-4 py-3 rounded-lg border-2 transition-colors ${
+                          theme === "dark"
+                            ? "border-black dark:border-white bg-neutral-100 dark:bg-neutral-700"
+                            : "border-neutral-200 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700/50"
+                        }`}
+                      >
+                        <MoonIcon className="h-5 w-5 text-black dark:text-white" />
+                        <span className="text-sm font-medium text-black dark:text-white">
+                          Dark
+                        </span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setTheme("system")}
+                        className={`flex flex-col items-center gap-2 px-4 py-3 rounded-lg border-2 transition-colors ${
+                          theme === "system"
+                            ? "border-black dark:border-white bg-neutral-100 dark:bg-neutral-700"
+                            : "border-neutral-200 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700/50"
+                        }`}
+                      >
+                        <ComputerDesktopIcon className="h-5 w-5 text-black dark:text-white" />
+                        <span className="text-sm font-medium text-black dark:text-white">
+                          System
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </Field>
+            </div>
+          </div>
+          
           {/* Local Configuration */}
           <div className="relative overflow-hidden rounded-xl bg-white dark:bg-neutral-800">
             <div className="space-y-4 p-4">
