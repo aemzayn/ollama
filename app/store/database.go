@@ -85,7 +85,7 @@ func (db *database) init() error {
 		think_enabled BOOLEAN NOT NULL DEFAULT 0,
 		think_level TEXT NOT NULL DEFAULT '',
 		remote TEXT NOT NULL DEFAULT '', -- deprecated
-		theme TEXT NOT NULL DEFAULT 'system',
+		theme TEXT NOT NULL DEFAULT '%s',
 		schema_version INTEGER NOT NULL DEFAULT %d
 	);
 
@@ -147,7 +147,7 @@ func (db *database) init() error {
 		plan TEXT NOT NULL DEFAULT '',
 		cached_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 	);
-	`, currentSchemaVersion)
+	`, DefaultTheme, currentSchemaVersion)
 
 	_, err := db.conn.Exec(schema)
 	if err != nil {
@@ -461,7 +461,8 @@ func (db *database) migrateV11ToV12() error {
 
 // migrateV12ToV13 adds theme column for UI theme preference
 func (db *database) migrateV12ToV13() error {
-	_, err := db.conn.Exec(`ALTER TABLE settings ADD COLUMN theme TEXT NOT NULL DEFAULT 'system'`)
+	query := fmt.Sprintf(`ALTER TABLE settings ADD COLUMN theme TEXT NOT NULL DEFAULT '%s'`, DefaultTheme)
+	_, err := db.conn.Exec(query)
 	if err != nil && !duplicateColumnError(err) {
 		return fmt.Errorf("add theme column: %w", err)
 	}

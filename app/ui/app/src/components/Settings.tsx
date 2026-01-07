@@ -79,6 +79,15 @@ export default function Settings() {
     },
   });
 
+  // Helper function for theme button classes
+  const getThemeButtonClass = (buttonTheme: string) => {
+    return `flex flex-col items-center gap-2 px-4 py-3 rounded-lg border-2 transition-colors ${
+      theme === buttonTheme
+        ? "border-black dark:border-white bg-neutral-100 dark:bg-neutral-700"
+        : "border-neutral-200 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700/50"
+    }`;
+  };
+
   useEffect(() => {
     refetchUser();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -361,11 +370,7 @@ export default function Settings() {
                       <button
                         type="button"
                         onClick={() => setTheme("light")}
-                        className={`flex flex-col items-center gap-2 px-4 py-3 rounded-lg border-2 transition-colors ${
-                          theme === "light"
-                            ? "border-black dark:border-white bg-neutral-100 dark:bg-neutral-700"
-                            : "border-neutral-200 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700/50"
-                        }`}
+                        className={getThemeButtonClass("light")}
                       >
                         <SunIcon className="h-5 w-5 text-black dark:text-white" />
                         <span className="text-sm font-medium text-black dark:text-white">
@@ -375,11 +380,7 @@ export default function Settings() {
                       <button
                         type="button"
                         onClick={() => setTheme("dark")}
-                        className={`flex flex-col items-center gap-2 px-4 py-3 rounded-lg border-2 transition-colors ${
-                          theme === "dark"
-                            ? "border-black dark:border-white bg-neutral-100 dark:bg-neutral-700"
-                            : "border-neutral-200 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700/50"
-                        }`}
+                        className={getThemeButtonClass("dark")}
                       >
                         <MoonIcon className="h-5 w-5 text-black dark:text-white" />
                         <span className="text-sm font-medium text-black dark:text-white">
@@ -389,11 +390,7 @@ export default function Settings() {
                       <button
                         type="button"
                         onClick={() => setTheme("system")}
-                        className={`flex flex-col items-center gap-2 px-4 py-3 rounded-lg border-2 transition-colors ${
-                          theme === "system"
-                            ? "border-black dark:border-white bg-neutral-100 dark:bg-neutral-700"
-                            : "border-neutral-200 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-700/50"
-                        }`}
+                        className={getThemeButtonClass("system")}
                       >
                         <ComputerDesktopIcon className="h-5 w-5 text-black dark:text-white" />
                         <span className="text-sm font-medium text-black dark:text-white">

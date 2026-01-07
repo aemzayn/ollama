@@ -3,6 +3,11 @@ import { useSettings } from "./useSettings";
 
 export type Theme = "light" | "dark" | "system";
 
+// Helper function to check system preference
+function getSystemPreference(): boolean {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches;
+}
+
 // Helper function to apply theme to document
 function applyTheme(theme: Theme, prefersDark?: boolean) {
   const root = document.documentElement;
@@ -12,7 +17,7 @@ function applyTheme(theme: Theme, prefersDark?: boolean) {
   
   if (theme === "system") {
     // Use system preference
-    const isDark = prefersDark ?? window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = prefersDark ?? getSystemPreference();
     if (isDark) {
       root.classList.add("dark");
     }

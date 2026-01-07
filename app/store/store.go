@@ -19,6 +19,11 @@ import (
 	"github.com/ollama/ollama/app/types/not"
 )
 
+const (
+	// DefaultTheme is the default theme setting for new installations
+	DefaultTheme = "system"
+)
+
 type File struct {
 	Filename string `json:"filename"`
 	Data     []byte `json:"data"`
