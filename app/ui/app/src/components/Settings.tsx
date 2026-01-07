@@ -23,7 +23,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useUser } from "@/hooks/useUser";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getSettings, updateSettings } from "@/api";
-import { useTheme, Theme } from "@/hooks/useTheme";
+import { useTheme } from "@/hooks/useTheme";
 
 function AnimatedDots() {
   return (
