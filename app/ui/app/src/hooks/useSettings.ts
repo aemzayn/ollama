@@ -22,6 +22,7 @@ type SettingsUpdate = Partial<{
   ThinkLevel: string;
   SelectedModel: string;
   SidebarOpen: boolean;
+  Theme: string;
 }>;
 
 export function useSettings() {

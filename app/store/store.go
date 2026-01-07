@@ -19,6 +19,11 @@ import (
 	"github.com/ollama/ollama/app/types/not"
 )
 
+const (
+	// DefaultTheme is the default theme setting for new installations
+	DefaultTheme = "system"
+)
+
 type File struct {
 	Filename string `json:"filename"`
 	Data     []byte `json:"data"`
@@ -169,6 +174,9 @@ type Settings struct {
 
 	// SidebarOpen indicates if the chat sidebar is open
 	SidebarOpen bool
+
+	// Theme specifies the UI theme preference (light, dark, or system)
+	Theme string
 }
 
 type Store struct {

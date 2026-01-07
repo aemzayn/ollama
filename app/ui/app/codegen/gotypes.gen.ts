@@ -413,6 +413,7 @@ export class Settings {
     ThinkLevel: string;
     SelectedModel: string;
     SidebarOpen: boolean;
+    Theme: string;
 
     constructor(source: any = {}) {
         if ('string' === typeof source) source = JSON.parse(source);
@@ -431,6 +432,7 @@ export class Settings {
         this.ThinkLevel = source["ThinkLevel"];
         this.SelectedModel = source["SelectedModel"];
         this.SidebarOpen = source["SidebarOpen"];
+        this.Theme = source["Theme"];
     }
 }
 export class SettingsResponse {
